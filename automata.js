@@ -92,7 +92,7 @@ function Automata(w, l) {
 }
 
 window.onload = function () {
-	var automata = new Automata(1000, 1000)
+	var automata = new Automata(400, 400)
 	automata.generateAutomata()
 	automata.renderAutomata()
 }
