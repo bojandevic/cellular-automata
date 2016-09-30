@@ -69,30 +69,44 @@ function Automata(w, l) {
 		var main = document.createElement('div')
 		main.style.width = 5 * w + 'px'
 		main.classList.add('main')
+		document.body.appendChild(main)
 
-		for (y = 0; y < l; y++) {
-			var row = document.createElement('div')
-			row.classList.add('row')
+		self.rowsRendered = 0
+		self.renderRows()
+	}
 
-			for (x = 0; x < w; x++)  {
-				var cell = document.createElement('div')
-				cell.classList.add('cell')
+	self.renderRows = function() {
+		if (self.rowsRendered < l)
+			setTimeout(function() {
+				self.renderNextRow()
+				self.rowsRendered++
+				self.renderRows()
+			}, 10)
+	}
 
-				if (self.automata[y][x])
-					cell.classList.add('active')
+	self.renderNextRow = function() {
+		var main = document.querySelector('.main')
 
-				row.appendChild(cell)
-			}
+		var row = document.createElement('div')
+		row.classList.add('row')
 
-			main.appendChild(row)
+		var y = self.rowsRendered
+		for (x = 0; x < w; x++)  {
+			var cell = document.createElement('div')
+			cell.classList.add('cell')
+
+			if (self.automata[y][x])
+				cell.classList.add('active')
+
+			row.appendChild(cell)
 		}
 
-		document.body.appendChild(main)
+		main.appendChild(row)
 	}
 }
 
 window.onload = function () {
-	var automata = new Automata(400, 400)
+	var automata = new Automata(300, 300)
 	automata.generateAutomata()
 	automata.renderAutomata()
 }
